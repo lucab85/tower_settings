@@ -21,12 +21,12 @@
 
     - name: token debug
       ansible.builtin.debug:
-        var: result.controller_token.token
+        var: result.token
 
     - name: Set value of "{{ my_key }}"
       ansible.controller.tower_settings:
         name: "{{ my_key }}"
         value: "{{ my_value }}"
         controller_host: "{{ my_controller }}"
-        controller_oauthtoken: "{{ result.controller_token.token }}"
+        controller_oauthtoken: "{{ result.token }}"
         validate_certs: "{{ validate_certs }}"
