@@ -7,7 +7,16 @@
     my_password: "redhat"
     validate_certs: false
     my_key: "SOCIAL_AUTH_SAML_TEAM_ATTR"
-    my_value: "test"
+    my_value: {
+        "saml_attr": "role",
+        "remove": true,
+        "team_org_map": [
+            {
+                "team": "TEAM_UNIX",
+                "organization": "Unix"
+            },
+        ]
+      }
     my_oauth: true
   tasks:
     - name: create a new token
