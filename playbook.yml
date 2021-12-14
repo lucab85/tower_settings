@@ -1,0 +1,32 @@
+---
+- name: Tower settings demo playbook
+  hosts: all
+  vars:
+    my_controller: "192.168.0.105"
+    my_username: "admin"
+    my_password: "redhat"
+    validate_certs: false
+    my_key: "SOCIAL_AUTH_SAML_TEAM_ATTR"
+    my_value: "test"
+  tasks:
+    - name: create a new token
+      ansible.controller.token:
+        scope: "write"
+        state: present
+        controller_username: "{{ my_username }}"
+        controller_password: "{{ my_password }}"
+        controller_host: "{{ my_controller }}"
+        validate_certs: "{{ validate_certs }}"
+      register: result
+
+    - name: token debug
+      ansible.builtin.debug:
+        var: result.controller_token.token
+
+    - name: Set value of "{{ my_key }}"
+      ansible.controller.tower_settings:
+        name: "{{ my_key }}"
+        value: "{{ my_value }}"
+        controller_host: "{{ my_controller }}"
+        controller_oauthtoken: "{{ result.controller_token.token }}"
+        validate_certs: "{{ validate_certs }}"
