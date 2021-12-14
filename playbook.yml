@@ -40,7 +40,6 @@
         name: "{{ my_key }}"
         value: "{{ my_value }}"
         controller_host: "{{ my_controller }}"
-        controller_oauthtoken: ansible_facts.controller_token.token
         controller_username: "{{ my_username }}"
         controller_password: "{{ my_password }}"
         controller_host: "{{ my_controller }}"
