@@ -8,6 +8,7 @@
     validate_certs: false
     my_key: "SOCIAL_AUTH_SAML_TEAM_ATTR"
     my_value: "test"
+    my_oauth: true
   tasks:
     - name: create a new token
       ansible.controller.token:
@@ -18,10 +19,12 @@
         controller_host: "{{ my_controller }}"
         validate_certs: "{{ validate_certs }}"
       register: result
+      when: my_oauth == true
 
     - name: token debug
       ansible.builtin.debug:
-        var: ansible_facts.controller_token.token|type_debug
+        var: ansible_facts.controller_token.token
+      when: my_oauth == true
 
     - name: Set value of "{{ my_key }}"
       ansible.controller.tower_settings:
@@ -30,3 +33,16 @@
         controller_host: "{{ my_controller }}"
         controller_oauthtoken: ansible_facts.controller_token.token
         validate_certs: "{{ validate_certs }}"
+      when: my_oauth == true
+
+    - name: Set value of "{{ my_key }}"
+      ansible.controller.tower_settings:
+        name: "{{ my_key }}"
+        value: "{{ my_value }}"
+        controller_host: "{{ my_controller }}"
+        controller_oauthtoken: ansible_facts.controller_token.token
+        controller_username: "{{ my_username }}"
+        controller_password: "{{ my_password }}"
+        controller_host: "{{ my_controller }}"
+        validate_certs: "{{ validate_certs }}"
+      when: my_oauth == false
