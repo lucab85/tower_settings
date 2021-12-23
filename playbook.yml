@@ -36,7 +36,7 @@
       when: my_oauth == true
 
     - name: Set value of "{{ my_key }}"
-      ansible.controller.tower_settings:
+      ansible.controller.settings:
         name: "{{ my_key }}"
         value: "{{ my_value }}"
         controller_host: "{{ my_controller }}"
@@ -45,10 +45,9 @@
       when: my_oauth == true
 
     - name: Set value of "{{ my_key }}"
-      ansible.controller.tower_settings:
+      ansible.controller.settings:
         name: "{{ my_key }}"
         value: "{{ my_value }}"
-        controller_host: "{{ my_controller }}"
         controller_username: "{{ my_username }}"
         controller_password: "{{ my_password }}"
         controller_host: "{{ my_controller }}"
